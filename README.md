@@ -1,10 +1,10 @@
 
 ### 安装
- npm i https://github.com/spirit1453/hfs.git#publish
+ npm i  https://github.com/spirit1453/react_native_collection.git#publish
 
  npm版本过高可能报错,使用yarn安装
 
- yarn add https://github.com/spirit1453/hfs.git#publish --save
+ yarn add  https://github.com/spirit1453/react_native_collection.git#publish --save
 
 ### 使用
 1. 先要安装 react-native-camera ,再
