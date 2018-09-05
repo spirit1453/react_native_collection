@@ -9,6 +9,7 @@
   },
   "description": "",
   "devDependencies": {
+    "@ys/collection": "git+https://github.com/spirit1453/node_collection.git#publish",
     "@ys/eslint-config-rn": "git+https://github.com/spirit1453/codebase.git#react_native_eslint",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
@@ -19,6 +20,7 @@
     "flow-remove-types": "^1.2.3",
     "husky": "^0.14.3",
     "jest": "^23.4.2",
+    "simple-git": "^1.96.0",
     "yargs": "^12.0.1"
   },
   "repository": {
@@ -27,6 +29,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf dist/* && babel src/ -d dist/ --ignore node_modules"
+    "build": "rm -rf dist/* && babel src/ -d dist/ --ignore node_modules",
+    "prepush": "node bin/prepush"
+  },
+  "gitInfo": {
+    "date": "2018-09-04 17:20:01 +0800",
+    "hash": "87940a83664711fc071b6cf3e93770b3b104faa1",
+    "message": "z (HEAD -> publish, origin/publish, origin/dev_z, dev_z)"
   }
 }
