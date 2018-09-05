@@ -5,7 +5,7 @@
   "dependencies": {
     "@ys/vanilla": "git+https://github.com/spirit1453/vanilla_js.git#publish",
     "prop-types": "^15.6.2",
-    "react-native-camera": "^1.2.0"
+    "react-native-camera": "^1.1.0"
   },
   "description": "",
   "devDependencies": {
@@ -33,8 +33,8 @@
     "prepush": "node bin/prepush"
   },
   "gitInfo": {
-    "date": "2018-09-04 17:20:01 +0800",
-    "hash": "87940a83664711fc071b6cf3e93770b3b104faa1",
-    "message": "z (HEAD -> publish, origin/publish, origin/dev_z, dev_z)"
+    "date": "2018-09-05 09:26:18 +0800",
+    "hash": "74260d6f91f632f346f3101a39e02821da443fb5",
+    "message": "z (HEAD -> dev_z, origin/publish, publish)"
   }
 }
