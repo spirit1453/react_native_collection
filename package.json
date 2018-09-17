@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "dependencies": {
-    "@ys/vanilla": "git+https://github.com/spirit1453/vanilla_js.git#publish",
+    "@ys/vanilla": "github:spirit1453/vanilla_js#publish",
     "prop-types": "^15.6.2",
     "react-native-camera": "^1.1.0"
   },
