@@ -4,6 +4,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@ys/vanilla": "github:spirit1453/vanilla_js#publish",
+    "native-base": "^2.8.0",
     "prop-types": "^15.6.2",
     "react-native-camera": "^1.1.0"
   },
