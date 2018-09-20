@@ -9,7 +9,7 @@
   },
   "description": "",
   "devDependencies": {
-    "@ys/eslint-config-rn": "git+https://github.com/spirit1453/codebase.git#react_native_eslint",
+    "@ys/eslint-config-rn": "github:spirit1453/codebase#react_native_eslint",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-preset-flow": "^6.23.0",
