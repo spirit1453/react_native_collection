@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "dependencies": {
-    "@ys/collection": "git+https://github.com/spirit1453/node_collection.git#publish",
+    "@ys/collection": "github:spirit1453/node_collection#publish",
     "native-base": "^2.8.0",
     "prop-types": "^15.6.2"
   },
