@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  StyleSheet, Vibration
+  StyleSheet, Vibration, View, TouchableOpacity, Text
 } from 'react-native'
 import Camera from 'react-native-camera'
 const commonUtil = require('../util/commonUtil')
 const {debounceFunc} = commonUtil
 
-export default class ScanView extends Component<{}> {
+export default class ScanView extends React.Component<{}> {
     static navigationOptions =() => {
       return {
         headerTitle: '扫描二维码'
