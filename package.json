@@ -3,13 +3,12 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "dependencies": {
-    "@ys/vanilla": "github:spirit1453/vanilla_js#publish",
+    "@ys/collection": "git+https://github.com/spirit1453/node_collection.git#publish",
     "native-base": "^2.8.0",
     "prop-types": "^15.6.2"
   },
   "description": "",
   "devDependencies": {
-    "@ys/collection": "git+https://github.com/spirit1453/node_collection.git#publish",
     "@ys/eslint-config-rn": "git+https://github.com/spirit1453/codebase.git#react_native_eslint",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
