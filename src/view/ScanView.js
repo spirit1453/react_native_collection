@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import {
-  StyleSheet, Vibration, View, TouchableOpacity, Text
+  StyleSheet, Vibration
 } from 'react-native'
 import Camera from 'react-native-camera'
 const commonUtil = require('../util/commonUtil')
@@ -18,9 +18,12 @@ export default class ScanView extends Component<{}> {
         <View style={styles.container}>
           <Camera
             onBarCodeRead={debounceFunc((e) => {
-              const {onRead, noVibrate} = this.props.navigation.state.params
-              if (!noVibrate) {
+              const {onRead, vibrate = true, goBack = true} = this.props.navigation.state.params
+              if (vibrate) {
                 Vibration.vibrate()
+              }
+              if (goBack) {
+                this.props.navigation.goBack()
               }
               onRead(e)
             }, 1000 * 5)}
