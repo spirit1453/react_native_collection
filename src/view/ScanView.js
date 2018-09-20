@@ -3,8 +3,7 @@ import {
   StyleSheet, Vibration, View, TouchableOpacity, Text
 } from 'react-native'
 import Camera from 'react-native-camera'
-const commonUtil = require('../util/commonUtil')
-const {debounceFunc} = commonUtil
+const {debounceFunc} = require('@ys/vanilla')
 
 export default class ScanView extends React.Component<{}> {
     static navigationOptions =() => {
