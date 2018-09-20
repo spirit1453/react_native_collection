@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet, Vibration
 } from 'react-native'
