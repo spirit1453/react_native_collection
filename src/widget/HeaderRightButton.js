@@ -5,20 +5,18 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import {Button} from 'native-base'
-const {FuncUtil} = require('@ys/vanilla')
-const {debounceFunc} = FuncUtil
 
 export default class HeaderRightButton extends Component<{}> {
   constructor (props) {
     super(props)
     this.state = {}
   }
-
+  // navigation.getParam('') could be null
   render () {
     const {onPress, color, title} = this.props
     return (
       <View style={{marginHorizontal: 10}}>
-        <Button light small style={{paddingHorizontal: 8}} onPress={debounceFunc(onPress)}>
+        <Button light small style={{paddingHorizontal: 8}} onPress={onPress}>
           <Text style={{color, fontWeight: 'bold'}}>{title}</Text>
         </Button>
       </View>
@@ -29,7 +27,7 @@ export default class HeaderRightButton extends Component<{}> {
 HeaderRightButton.defaultProps = {}
 
 HeaderRightButton.propTypes = {
-  onPress: PropTypes.func,
+  onPress: PropTypes.any,
   color: PropTypes.string,
   title: PropTypes.string
 }

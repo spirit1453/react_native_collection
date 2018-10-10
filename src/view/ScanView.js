@@ -12,7 +12,7 @@ export default class ScanView extends React.Component<{}> {
         headerTitle: '扫描二维码'
       }
     }
-
+    // todo android no reaction, render when unmounted, camera is deprecated
     render () {
       return (
         <View style={styles.container}>
