@@ -11,7 +11,7 @@ export default class HeaderRightButton extends Component<{}> {
     super(props)
     this.state = {}
   }
-  // navigation.getParam('') could be null
+  // todo navigation.getParam('') could be null
   render () {
     const {onPress, color, title} = this.props
     return (
