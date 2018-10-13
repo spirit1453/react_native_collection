@@ -1,15 +1,5 @@
-const _ = require('lodash')
 
 const commonUtil = {
-  getTimeDisplay () {
-    const date = new Date()
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
-  },
-  runFunc (func) {
-    if (func) {
-      func()
-    }
-  },
   getFolderId (filePath) {
     return filePath.split('/')[6]
   },
