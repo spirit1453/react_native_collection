@@ -1,5 +1,4 @@
 import {Alert} from 'react-native'
-const ErrorUtilRN = require('ErrorUtils')
 const {FuncUtil} = require('@ys/vanilla')
 const {runFunc} = FuncUtil
 const errorMsgSet = new Set()
@@ -13,7 +12,7 @@ function f () {
 f()
 
 class ErrorUtil {
-  static processError ({devProcess, productionProcess, resetTime}) {
+  static processError ({devProcess, productionProcess, resetTime, ErrorUtilRN}) {
     if (resetTime) {
       resetTimeDefault = resetTime
     }
