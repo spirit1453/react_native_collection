@@ -17,20 +17,26 @@ class ErrorUtil {
     if (resetTime) {
       resetTimeDefault = resetTime
     }
+    const func = (msg, innerFunc) => {
+      if (!errorMsgSet.has(msg)) {
+        errorMsgSet.add(msg)
+        runFunc(innerFunc)
+      }
+    }
     ErrorUtilRN.setGlobalHandler((error) => {
+      const msg = error.toString()
+
       if (__DEV__) {
         if (devProcess) {
           devProcess()
         } else {
-          const msg = error.toString()
-          if (!errorMsgSet.has(msg)) {
-            errorMsgSet.add(msg)
+          func(msg, () => {
             Alert.alert(msg)
-          }
-          console.log(error)
+            console.log(error)
+          })
         }
       } else {
-        runFunc(productionProcess)
+        func(msg, productionProcess)
       }
     })
   }
