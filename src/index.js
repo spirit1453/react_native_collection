@@ -3,6 +3,7 @@ import ScanView from './view/ScanView'
 import DelayIndicator from './widget/DelayIndicator'
 import HeaderRightButton from './widget/HeaderRightButton'
 import TextInputWrapper from './widget/TextInputWrapper'
+import CenterLayout from './layout/CenterLayout'
 const commonUtil = require('./util/commonUtil')
 const ErrorUtil = require('./util/ErrorUtil')
 
@@ -12,7 +13,8 @@ const common = {
   DelayIndicator,
   HeaderRightButton,
   TextInputWrapper,
-  ErrorUtil
+  ErrorUtil,
+  CenterLayout
 }
 
 Object.freeze(common)
