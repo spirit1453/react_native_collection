@@ -40,5 +40,5 @@ CenterLayout.propTypes = {
   textStyle: PropTypes.object,
   text: PropTypes.string,
   // todo: require('')
-  img: PropTypes.any.required
+  img: PropTypes.any
 }
