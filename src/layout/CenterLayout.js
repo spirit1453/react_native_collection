@@ -39,5 +39,6 @@ CenterLayout.propTypes = {
   imgSize: PropTypes.number,
   textStyle: PropTypes.object,
   text: PropTypes.string,
-  img: PropTypes.node.required
+  // todo: require('')
+  img: PropTypes.any.required
 }
