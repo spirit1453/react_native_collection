@@ -6,6 +6,7 @@ import TextInputWrapper from './widget/TextInputWrapper'
 import CenterLayout from './layout/CenterLayout'
 const commonUtil = require('./util/commonUtil')
 const ErrorUtil = require('./util/ErrorUtil')
+const ErrorStock = require('./util/ErrorStock')
 
 const common = {
   commonUtil,
@@ -14,7 +15,8 @@ const common = {
   HeaderRightButton,
   TextInputWrapper,
   ErrorUtil,
-  CenterLayout
+  CenterLayout,
+  ErrorStock
 }
 
 Object.freeze(common)

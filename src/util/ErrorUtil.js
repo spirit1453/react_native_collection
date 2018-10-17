@@ -1,42 +1,12 @@
-import {Alert} from 'react-native'
-const {FuncUtil} = require('@ys/vanilla')
-const {runFunc} = FuncUtil
-const errorMsgSet = new Set()
-let resetTimeDefault = 1000 * 60
 
-function f () {
-  errorMsgSet.clear()
-  setTimeout(f, resetTimeDefault)
-}
-
-f()
+const ErrorStock = require('./ErrorStock')
 
 class ErrorUtil {
-  static processError ({devProcess, productionProcess, resetTime, ErrorUtilRN}) {
-    if (resetTime) {
-      resetTimeDefault = resetTime
-    }
-    const func = (msg, innerFunc) => {
-      if (!errorMsgSet.has(msg)) {
-        errorMsgSet.add(msg)
-        runFunc(innerFunc)
-      }
-    }
-    ErrorUtilRN.setGlobalHandler((error) => {
-      const msg = error.toString()
+  static setGlobalErrorHandler ({devProcess, productionProcess, resetTime, ErrorUtilRN}) {
+    const errorStock = new ErrorStock(resetTime)
 
-      if (__DEV__) {
-        if (devProcess) {
-          devProcess()
-        } else {
-          func(msg, () => {
-            Alert.alert(msg)
-            console.log(error)
-          })
-        }
-      } else {
-        func(msg, productionProcess)
-      }
+    ErrorUtilRN.setGlobalHandler((error) => {
+      errorStock.processError({error, devProcess, productionProcess})
     })
   }
   static init () {
