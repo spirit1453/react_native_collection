@@ -6,6 +6,7 @@ import TextInputWrapper from './widget/TextInputWrapper'
 import CenterLayout from './layout/CenterLayout'
 const commonUtil = require('./util/commonUtil')
 const ErrorUtil = require('./util/ErrorUtil')
+const NetInfoUtil = require('./util/NetInfoUtil')
 const ErrorStock = require('./util/ErrorStock')
 
 const common = {
@@ -16,7 +17,8 @@ const common = {
   TextInputWrapper,
   ErrorUtil,
   CenterLayout,
-  ErrorStock
+  ErrorStock,
+  NetInfoUtil
 }
 
 Object.freeze(common)
