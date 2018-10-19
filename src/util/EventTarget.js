@@ -3,21 +3,21 @@ class EventTarget{
   static _listeners=new Map();
 
   static on(event,fun) {
-    var ary=this._listeners.get(event)
+    var ary=EventTarget._listeners.get(event)
     if(!ary){
       ary = [];
-      this._listeners.set(event,ary);
+      EventTarget._listeners.set(event,ary);
     }
     if (ary.indexOf(fun) === -1) {
       ary.push(fun)
     }
   }
   static un(event,fun) {
-    var ary=this._listeners.get(event);
+    var ary=EventTarget._listeners.get(event);
     ary.splice(ary.indexOf(fun),1);
   }
   static fire(event,params) {
-    var ary=this._listeners.get(event)
+    var ary=EventTarget._listeners.get(event)
     if(ary){
       ary.forEach(function(o){
         o(params);
