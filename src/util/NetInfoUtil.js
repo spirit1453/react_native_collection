@@ -8,16 +8,16 @@ const {runFunc} = FuncUtil
 
 class NetInfoUtil extends EventTarget {
   static get online () {
-    return NetInfoUtil.online
+    return NetInfoUtil.onlineState
   }
   static init () {
     NetInfo.addEventListener('connectionChange', (connectionInfo) => {
       const {type} = connectionInfo
       if (type === 'none' || type === 'unknown') {
-        NetInfoUtil.online = false
+        NetInfoUtil.onlineState = false
         NetInfoUtil.fire('offline')
       } else {
-        NetInfoUtil.online = true
+        NetInfoUtil.onlineState = true
         NetInfoUtil.fire('online')
       }
     }
@@ -26,7 +26,7 @@ class NetInfoUtil extends EventTarget {
 
   static async httpPost ({offlineCb, url, param}) {
     let result
-    if (NetInfoUtil.online) {
+    if (NetInfoUtil.onlineState) {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
