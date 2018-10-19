@@ -49,7 +49,7 @@ class UpdateUtil {
   }
 
   // customInfo, id, name, versionLocal,previewVersion, isDevMode, isPreviewVersionClient
-  async checkUpdateGeneral (option) {
+  async checkUpdate (option) {
     const {customInfo, beforeUpdate, noUpdateCb, checkUpdateErrorCb, updateAnyWay = false} = option
     const result = await httpPost({
       url: this.checkUpdateUrl,
@@ -115,6 +115,7 @@ class UpdateUtil {
   }
 
   static installApk (filePath) {
+    // todo: AndroidUtil should be put in collection
     NativeModules.AndroidUtil.install(filePath)
   }
 
