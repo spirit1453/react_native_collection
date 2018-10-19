@@ -72,6 +72,7 @@ class UpdateUtil {
         duration: 3000,
         type: 'error'
       })
+      runFunc(checkUpdateErrorCb.bind(null, error))
       return
     }
 
