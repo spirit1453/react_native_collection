@@ -2,11 +2,11 @@ import {
   NetInfo
 } from 'react-native'
 import {Toast} from 'native-base'
-import EventEmitter from 'EventEmitter'
+import EventTarget from './EventTarget'
 const {FuncUtil} = require('@ys/vanilla')
 const {runFunc} = FuncUtil
 
-class NetInfoUtil extends EventEmitter {
+class NetInfoUtil extends EventTarget {
   static get online () {
     return NetInfoUtil.online
   }
@@ -15,10 +15,10 @@ class NetInfoUtil extends EventEmitter {
       const {type} = connectionInfo
       if (type === 'none' || type === 'unknown') {
         NetInfoUtil.online = false
-        NetInfoUtil.emit('offline')
+        NetInfoUtil.fire('offline')
       } else {
         NetInfoUtil.online = true
-        NetInfoUtil.emit('online')
+        NetInfoUtil.fire('online')
       }
     }
     )
