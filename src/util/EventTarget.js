@@ -1,8 +1,8 @@
 class EventTarget{
 
-  _listeners=new Map();
+  static _listeners=new Map();
 
-  on(event,fun) {
+  static on(event,fun) {
     var ary=this._listeners.get(event)
     if(!ary){
       ary = [];
@@ -12,11 +12,11 @@ class EventTarget{
       ary.push(fun)
     }
   }
-  un(event,fun) {
+  static un(event,fun) {
     var ary=this._listeners.get(event);
     ary.splice(ary.indexOf(fun),1);
   }
-  fire(event,params) {
+  static fire(event,params) {
     var ary=this._listeners.get(event)
     if(ary){
       ary.forEach(function(o){
