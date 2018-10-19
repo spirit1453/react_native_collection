@@ -7,6 +7,7 @@ import CenterLayout from './layout/CenterLayout'
 const commonUtil = require('./util/commonUtil')
 const ErrorUtil = require('./util/ErrorUtil')
 const NetInfoUtil = require('./util/NetInfoUtil')
+const UpdateUtil = require('./util/UpdateUtil')
 const ErrorStock = require('./util/ErrorStock')
 
 const common = {
@@ -18,7 +19,8 @@ const common = {
   ErrorUtil,
   CenterLayout,
   ErrorStock,
-  NetInfoUtil
+  NetInfoUtil,
+  UpdateUtil
 }
 
 Object.freeze(common)

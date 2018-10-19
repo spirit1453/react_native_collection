@@ -5,7 +5,8 @@
   "dependencies": {
     "@ys/collection": "github:spirit1453/node_collection#publish",
     "native-base": "^2.8.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "react-native": "^0.57.3"
   },
   "description": "",
   "devDependencies": {
