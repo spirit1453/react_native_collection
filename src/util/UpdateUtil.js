@@ -8,13 +8,13 @@ const {FuncUtil} = require('@ys/vanilla')
 const {runFunc} = FuncUtil
 const {httpPost} = require('./NetInfoUtil')
 
-// customInfo, id, name, versionLocal,previewVersion, isDevMode, isPreviewVersionClient
 class UpdateUtil {
-  constructor ({checkUpdateUrl, versionLocal, processError}) {
+  constructor ({checkUpdateUrl, versionLocal, manualDownloadUrl, appId}) {
     this.checkUpdateUrl = checkUpdateUrl
     this.versionLocal = versionLocal
-    this.processError = processError
     this.downloadApkCount = 0
+    this.manualDownloadUrl = manualDownloadUrl
+    this.appId = appId
     this.init()
   }
 
@@ -23,19 +23,24 @@ class UpdateUtil {
       markSuccess()
     }
     if (isRolledBack) {
-      this.manualUpdate(`应用更新失败,已经重新恢复到版本${this.versionLocal}`)
+      const option = {
+        info: `应用更新失败,已经重新恢复到版本${this.versionLocal}`,
+        manualDownloadUrl: this.manualDownloadUrl
+      }
+      UpdateUtil.manualUpdate(option)
     }
   }
 
-  manualUpdate (option) {
-    const {info, manualDownloadUrl} = option
+  static manualUpdate ({info, manualDownloadUrl}) {
     Alert.alert('提示', `${info},是否手动下载最新版本?`,
-      {text: '取消', onPress: null, style: 'cancel'},
+      {text: '取消', style: 'cancel'},
       {
         text: '确认',
         onPress: () => {
-          Linking.openURL(manualDownloadUrl).catch(error => {
-            runFunc(this.processError.bind(null, error))
+          Linking.openURL(manualDownloadUrl).catch((error) => {
+            console.log(error)
+            const errorMsg = `无法打开手动下载网址链接${manualDownloadUrl}`
+            Alert.alert('错误', errorMsg)
           })
         }
       },
@@ -43,8 +48,9 @@ class UpdateUtil {
     )
   }
 
+  // customInfo, id, name, versionLocal,previewVersion, isDevMode, isPreviewVersionClient
   async checkUpdateGeneral (option) {
-    const {customInfo, beforeUpdate, noUpdateCb, errorCb} = option
+    const {customInfo, beforeUpdate, noUpdateCb, checkUpdateErrorCb, updateAnyWay = false} = option
     const result = await httpPost({
       url: this.checkUpdateUrl,
       param: {
@@ -53,16 +59,17 @@ class UpdateUtil {
         uniqueId: DeviceInfo.getUniqueID(),
         buildNumberClient: DeviceInfo.getVersion(),
         __DEV__,
-        customInfo
+        customInfo,
+        updateAnyWay
       }
     })
     if (__DEV__) {
-      // console.log(result)
+      console.log(result)
     } else {
       const {needUpdate, isHotUpdate, error} = result
 
       if (error) {
-        runFunc(errorCb.bind(null, error))
+        runFunc(checkUpdateErrorCb.bind(null, error))
       } else {
         if (needUpdate) {
           if (isHotUpdate) {
@@ -81,9 +88,7 @@ class UpdateUtil {
     }
   }
 
-  async nativeUpdate (option) {
-    const {result, beforeUpdate} = option
-
+  async nativeUpdate ({result, beforeUpdate}) {
     const {hash, manifestUrl, fileName} = result
 
     if (Platform.OS === 'android') {
@@ -104,11 +109,8 @@ class UpdateUtil {
         })
       }
     } else {
-      this.informUpdate(result, beforeUpdate, () => {
-        console.log(manifestUrl)
-
-        Linking.openURL(manifestUrl)
-      })
+      await UpdateUtil.informUpdate(result, beforeUpdate)
+      Linking.openURL(manifestUrl)
     }
   }
 
@@ -127,10 +129,8 @@ class UpdateUtil {
       RNFS.hash(filePath, 'md5').then(localHash => {
         if (localHash === hash) {
           this.downloadApkCount = 0
-
-          this.informUpdate(result, () => {
-            this.installApk(filePath)
-          })
+          this.informUpdate(result)
+          this.installApk(filePath)
         } else {
           this.downloadApkCount++
           if (this.downloadApkCount > 5) {
@@ -145,7 +145,7 @@ class UpdateUtil {
       })
     }).catch((error) => {
       console.log({error})
-      this.manualUpdate({
+      UpdateUtil.manualUpdate({
         info: '下载apk文件失败,已停止更新',
         manualDownloadUrl
       })
@@ -153,57 +153,59 @@ class UpdateUtil {
   }
 
   hotUpdate (option) {
-    const {result, beforeUpdate, noUpdateCb, appId} = option
+    const {result, beforeUpdate, noUpdateCb} = option
 
     const {ppkUrl, manualDownloadUrl} = result
     let param = {
       updateUrl: ppkUrl,
-      hash: appId, // hash必须是字符串
+      hash: this.appId, // hash必须是字符串
       update: true
     }
     try {
       // 一旦downloadUpdate,下次重启必然更新
-      this.informUpdate(result, beforeUpdate, () => {
+      UpdateUtil.informUpdate(result, beforeUpdate, () => {
         downloadUpdate(param).then(hash => {
           switchVersion(hash)
         })
       })
     } catch (error) {
       runFunc(noUpdateCb)
-      this.manualUpdate({
+      UpdateUtil.manualUpdate({
         manualDownloadUrl,
         info: `下载更新出现错误,已停止更新`
       })
     }
   }
 
-  async informUpdate (result, beforeUpdate, updateNow) {
-    if (beforeUpdate) {
-      await beforeUpdate()
-    }
-    const {isForce, isPreviewVersion, nextVersion, newVersion, isSilent} = result
-    if (isSilent) {
-      updateNow()
-    } else {
-      const optionAry = [
-        {text: '取消', style: 'cancel'},
-        {
-          text: '确认',
-          onPress: updateNow
-        }
-      ]
-      let ask = '是否马上升级?'
-      if (isForce) {
-        optionAry.shift()
-        ask = '请马上升级'
+  static informUpdate (result, beforeUpdate) {
+    return new Promise(async resolve => {
+      if (beforeUpdate) {
+        await beforeUpdate()
       }
-      Alert.alert(
-        '提示',
-        `有${isPreviewVersion ? `预览版本${nextVersion}` : `最新版本${newVersion}`},${ask}`,
-        optionAry,
-        { cancelable: false }
-      )
-    }
+      const {isForce, isPreviewVersion, nextVersion, newVersion, isSilent} = result
+      if (isSilent) {
+        resolve()
+      } else {
+        const optionAry = [
+          {text: '取消', style: 'cancel'},
+          {
+            text: '确认',
+            onPress: resolve
+          }
+        ]
+        let ask = '是否马上升级?'
+        if (isForce) {
+          optionAry.shift()
+          ask = '请马上升级'
+        }
+        Alert.alert(
+          '提示',
+          `有${isPreviewVersion ? `预览版本${nextVersion}` : `最新版本${newVersion}`},${ask}`,
+          optionAry,
+          { cancelable: false }
+        )
+      }
+    })
   }
 }
 
