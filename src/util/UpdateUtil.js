@@ -2,6 +2,7 @@
 import {downloadUpdate, switchVersion, isFirstTime, isRolledBack, markSuccess} from 'react-native-update'
 import DeviceInfo from 'react-native-device-info'
 import {Platform, Alert, Linking, NativeModules} from 'react-native'
+import {Toast} from 'native-base'
 import RNFetchBlob from 'react-native-fetch-blob'
 const RNFS = require('react-native-fs')
 const {FuncUtil} = require('@ys/vanilla')
@@ -51,18 +52,29 @@ class UpdateUtil {
   // customInfo, id, name, versionLocal,previewVersion, isDevMode, isPreviewVersionClient
   async checkUpdate (option) {
     const {customInfo, beforeUpdate, noUpdateCb, checkUpdateErrorCb, updateAnyWay = false} = option
-    const result = await httpPost({
-      url: this.checkUpdateUrl,
-      param: {
-        os: Platform.OS,
-        bundleId: DeviceInfo.getBundleId(),
-        uniqueId: DeviceInfo.getUniqueID(),
-        buildNumberClient: DeviceInfo.getVersion(),
-        __DEV__,
-        customInfo,
-        updateAnyWay
-      }
-    })
+    let result
+    try {
+      result = await httpPost({
+        url: this.checkUpdateUrl,
+        param: {
+          os: Platform.OS,
+          bundleId: DeviceInfo.getBundleId(),
+          uniqueId: DeviceInfo.getUniqueID(),
+          buildNumberClient: DeviceInfo.getVersion(),
+          __DEV__,
+          customInfo,
+          updateAnyWay
+        }
+      })
+    } catch (error) {
+      Toast.show({
+        text: '检查更新失败',
+        duration: 3000,
+        type: 'error'
+      })
+      return
+    }
+
     if (__DEV__) {
       console.log(result)
     } else {
