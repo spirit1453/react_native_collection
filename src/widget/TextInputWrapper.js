@@ -14,11 +14,12 @@ export default class TextInputWrapper extends Component<{}> {
     this.minHeight = 35
     this.state = {
       height: this.minHeight,
-      autoFocus: false
+      autoFocus: false,
+      defaultValue: ''
     }
   }
-  reload () {
-    this.setState({key: uuid(), autoFocus: true})
+  reload (defaultValue = '') {
+    this.setState({key: uuid(), autoFocus: true, defaultValue})
   }
 
   render () {
@@ -37,7 +38,7 @@ export default class TextInputWrapper extends Component<{}> {
         marginBottom: 5,
         height: this.state.height}}
       blurOnSubmit={false} returnKeyType="send" enablesReturnKeyAutomatically
-      underlineColorAndroid='transparent' defaultValue={''} onSubmitEditing={debounceFunc(onSubmitEditing)}
+      underlineColorAndroid='transparent' defaultValue={this.state.defaultValue} onSubmitEditing={debounceFunc(onSubmitEditing)}
       onChangeText={onChangeText} onContentSizeChange={(event) => {
         let heightContent = event.nativeEvent.contentSize.height
         if (heightContent < this.minHeight) {
