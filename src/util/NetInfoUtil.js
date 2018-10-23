@@ -38,11 +38,6 @@ class NetInfoUtil extends EventTarget {
       result = response.json()
     } else {
       runFunc(offlineCb)
-      Toast.show({
-        text: '无法连接网络,请检查网络设置',
-        position: 'top',
-        duration: 5000
-      })
     }
     return result
   }
