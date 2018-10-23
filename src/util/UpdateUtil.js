@@ -67,11 +67,6 @@ class UpdateUtil {
         }
       })
     } catch (error) {
-      Toast.show({
-        text: '检查更新失败',
-        duration: 3000,
-        type: 'error'
-      })
       runFunc(checkUpdateErrorCb.bind(null, error))
       return
     }
