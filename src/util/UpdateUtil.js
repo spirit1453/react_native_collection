@@ -61,9 +61,9 @@ class UpdateUtil {
           bundleId: DeviceInfo.getBundleId(),
           uniqueId: DeviceInfo.getUniqueID(),
           buildNumberClient: DeviceInfo.getVersion(),
-          __DEV__,
+          "__DEV__": __DEV__,
           customInfo,
-          updateAnyWay
+          "updateAnyWay": updateAnyWay
         }
       })
     } catch (error) {
