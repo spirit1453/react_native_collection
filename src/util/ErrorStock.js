@@ -7,8 +7,8 @@ let resetTimeDefault = 1000 * 60
 class ErrorStock {
   constructor (resetTime = resetTimeDefault) {
     this.errorMsgSet = new Set()
-    function f () {
-      errorMsgSet.clear()
+    const f = () => {
+      this.errorMsgSet.clear()
       setTimeout(f, resetTime)
     }
     f()
