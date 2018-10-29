@@ -14,10 +14,10 @@ class ErrorStock {
     f()
   }
 
-  func (msg, innerFunc) {
+  func (msg, innerFunc, error) {
     if (!this.errorMsgSet.has(msg)) {
       this.errorMsgSet.add(msg)
-      runFunc(innerFunc)
+      runFunc(innerFunc.bind(this, error))
     }
   }
 
@@ -26,7 +26,7 @@ class ErrorStock {
 
     if (__DEV__) {
       if (devProcess) {
-        devProcess()
+        devProcess(error)
       } else {
         this.func(msg, () => {
           Alert.alert(msg)
@@ -34,7 +34,7 @@ class ErrorStock {
         })
       }
     } else {
-      this.func(msg, productionProcess)
+      this.func(msg, productionProcess, error)
     }
   }
 }

@@ -51,7 +51,7 @@ class UpdateUtil {
 
   // customInfo, id, name, versionLocal,previewVersion, isDevMode, isPreviewVersionClient
   async checkUpdate (option) {
-    const {customInfo, beforeUpdate, noUpdateCb, checkUpdateErrorCb, updateAnyWay = false} = option
+    const {customInfo, beforeUpdate, noUpdateCb, checkUpdateErrorCb, updateAnyWay = false, wantPreview = false} = option
     let result
     try {
       result = await httpPost({
@@ -63,7 +63,8 @@ class UpdateUtil {
           buildNumberClient: DeviceInfo.getVersion(),
           "__DEV__": __DEV__,
           customInfo,
-          "updateAnyWay": updateAnyWay
+          "updateAnyWay": updateAnyWay,
+          "wantPreview": wantPreview
         }
       })
     } catch (error) {
