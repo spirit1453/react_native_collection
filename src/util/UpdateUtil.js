@@ -77,29 +77,23 @@ class UpdateUtil {
       return
     }
 
-    if (__DEV__) {
-      console.log(result)
-      // todo: 提示开发状态
-      runFunc(noUpdateCb)
-    } else {
-      const {needUpdate, isHotUpdate, error} = result
+    const {needUpdate, isHotUpdate, error} = result
 
-      if (error) {
-        runFunc(checkUpdateErrorCb.bind(null, error))
-      } else {
-        if (needUpdate) {
-          if (isHotUpdate) {
-            this.hotUpdate({
-              beforeUpdate, noUpdateCb, result
-            })
-          } else {
-            this.nativeUpdate({
-              beforeUpdate, noUpdateCb, result
-            })
-          }
+    if (error) {
+      runFunc(checkUpdateErrorCb.bind(null, error))
+    } else {
+      if (needUpdate) {
+        if (isHotUpdate) {
+          this.hotUpdate({
+            beforeUpdate, noUpdateCb, result
+          })
         } else {
-          runFunc(noUpdateCb)
+          this.nativeUpdate({
+            beforeUpdate, noUpdateCb, result
+          })
         }
+      } else {
+        runFunc(noUpdateCb)
       }
     }
   }
