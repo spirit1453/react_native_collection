@@ -163,7 +163,7 @@ class UpdateUtil {
     })
   }
 
-  hotUpdate (option) {
+  async hotUpdate (option) {
     const {result, beforeUpdate, noUpdateCb} = option
 
     const {ppkUrl, manualDownloadUrl} = result
@@ -174,10 +174,9 @@ class UpdateUtil {
     }
     try {
       // 一旦downloadUpdate,下次重启必然更新
-      UpdateUtil.informUpdate(result, beforeUpdate, () => {
-        downloadUpdate(param).then(hash => {
-          switchVersion(hash)
-        })
+      await UpdateUtil.informUpdate(result, beforeUpdate)
+      downloadUpdate(param).then(hash => {
+        switchVersion(hash)
       })
     } catch (error) {
       runFunc(noUpdateCb)
