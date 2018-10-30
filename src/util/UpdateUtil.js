@@ -79,6 +79,8 @@ class UpdateUtil {
 
     if (__DEV__) {
       console.log(result)
+      // todo: 提示开发状态
+      runFunc(noUpdateCb)
     } else {
       const {needUpdate, isHotUpdate, error} = result
 
