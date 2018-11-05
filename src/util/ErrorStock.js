@@ -21,13 +21,14 @@ class ErrorStock {
     }
   }
 
-  processError ({error, devProcess, productionProcess}) {
+  processError ({error, devProcess, productionProcess, alertOnDev = true}) {
     const msg = error.toString()
 
     if (__DEV__) {
       if (devProcess) {
         devProcess(error)
-      } else {
+      }
+      if (alertOnDev) {
         this.func(msg, () => {
           Alert.alert(msg)
           console.log(error)
