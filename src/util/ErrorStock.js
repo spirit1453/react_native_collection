@@ -17,7 +17,9 @@ class ErrorStock {
   func (msg, innerFunc, error) {
     if (!this.errorMsgSet.has(msg)) {
       this.errorMsgSet.add(msg)
-      runFunc(innerFunc.bind(this, error))
+      if (innerFunc) {
+        runFunc(innerFunc.bind(this, error))
+      }
     }
   }
 
