@@ -25,17 +25,26 @@ class NetInfoUtil extends EventTarget {
   }
 
   static async httpPost ({offlineCb, url, param}) {
+
     let result
     if (NetInfoUtil.onlineState) {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(param)
-      })
-      result = response.json()
+      try {
+        const paramStringify = JSON.stringify(param)
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: paramStringify
+        })
+        result = await response.json()
+
+      } catch( error) {
+        console.error(`Post ${url} with param ${paramStringify} fail 1`)
+        console.error(error)
+      }
+
     } else {
       runFunc(offlineCb)
     }
