@@ -15,10 +15,8 @@ class NetInfoUtil extends EventTarget {
       const {type} = connectionInfo
       if (type === 'none' || type === 'unknown') {
         NetInfoUtil.onlineState = false
-        NetInfoUtil.fire('offline')
       } else {
         NetInfoUtil.onlineState = true
-        NetInfoUtil.fire('online')
       }
     }
     )
@@ -28,8 +26,8 @@ class NetInfoUtil extends EventTarget {
 
     let result
     if (NetInfoUtil.onlineState) {
+      const paramStringify = JSON.stringify(param)
       try {
-        const paramStringify = JSON.stringify(param)
         const response = await fetch(url, {
           method: 'POST',
           headers: {
