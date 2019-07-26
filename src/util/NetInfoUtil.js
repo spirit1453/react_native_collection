@@ -39,8 +39,8 @@ class NetInfoUtil extends EventTarget {
         result = await response.json()
 
       } catch( error) {
-        console.error(`Post ${url} with param ${paramStringify} fail 1`)
-        console.error(error)
+        console.log(`Post ${url} with param ${paramStringify} fail 1`)
+        console.log(error)
       }
 
     } else {
